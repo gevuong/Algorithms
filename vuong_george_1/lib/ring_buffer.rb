@@ -66,6 +66,7 @@ class RingBuffer
     @start_idx = (start_idx - 1) % capacity
     @length += 1
     self[0] = val
+    # bracket method adds 0 + start_idx
   end
 
   protected
