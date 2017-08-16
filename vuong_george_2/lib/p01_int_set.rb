@@ -1,15 +1,24 @@
+# A set is an ADT (Abstract Data Type)
 class MaxIntSet
   def initialize(max)
-    
+    @store = Array.new(max)
   end
 
   def insert(num)
+    if num < @store.length
+      @store.push(num)
+      true
+    elsif num > @store.length || num < 0
+      raise 'Out of bounds'
+    end
   end
 
   def remove(num)
+    
   end
 
   def include?(num)
+    @store.include?(num)
   end
 
   private
