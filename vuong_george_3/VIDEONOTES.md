@@ -42,7 +42,7 @@ Ex: { bronze: ..., silver: ..., gold: ...}. This wouldn't be efficient because w
 
 ## How to store binary tree into array
 * To find children of parent: 2i + 1 and 2i + 2, where i is value of parent
-* To find parent of children: (i - 1)/2, where i is value of child
+* To find parent of child: (i - 1)/2, where i is value of child
 * #peek: the root element, which is the min element will always be constant time
 * #insert: add element to end of array, find parent and swap with parent if element < parent.
 * #extract: Swap min element with value in tail element at index -1. Then pop last element in array. And then the largest element at the beginning of array is compared with each element using min-heap. And this will sort array.
@@ -50,7 +50,7 @@ Ex: { bronze: ..., silver: ..., gold: ...}. This wouldn't be efficient because w
 
 # Heap Sort Intro
 * Always going to run O(log(n)) time.
-* Can be done in place without needing to duplicate input array multiple times, which creates a linear time complexity. 
+* Can be done in place without needing to duplicate input array multiple times, which creates a linear time complexity.
 * Heapify
 * Insertion is a log(n), meaning it's nlog(n). So is extraction.
 

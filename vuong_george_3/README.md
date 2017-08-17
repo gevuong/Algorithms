@@ -8,7 +8,7 @@ Start by implementing `BinaryMinHeap`. Instances of `BinaryMinHeap` will use an 
 
 Add the `::child_indices` and `::parent_index` methods. The `::child_indices` method should take in a parent index and the length of an array and return only the child indices that fall within the array. The `::parent_index` method should take in a child index and return its parent index.
 
-Once you've completed these methods, it's time to tackle `::heapyify_down`. This method should take in an array, parent index, and a length. If the parent is greater than either of its two children, swap them. Continue swapping the node until it has reached the correct position (aka neither of its children are greater).
+Once you've completed these methods, it's time to tackle `::heapify_down`. This method should take in an array, parent index, and a length. If the parent is greater than either of its two children, swap them. Continue swapping the node until it has reached the correct position (aka neither of its children are greater).
 
 Next, implement `::heapify_up`. This method will be used when adding a new element to the heap to make sure that it is in the correct position. It should take an array, a child index, and a length. Check the child against its parent, and swap the elements if the parent is greater. Continue until the node has reached the correct position.
 
