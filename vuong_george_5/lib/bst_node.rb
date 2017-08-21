@@ -1,4 +1,10 @@
 class BSTNode
-  def initialize(value)
+  attr_reader :value
+  attr_accessor :left, :right
+
+  def initialize(value = nil, left = nil, right = nil)
+    @value = value
+    @left = left
+    @right = right
   end
 end
