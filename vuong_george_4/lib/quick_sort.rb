@@ -17,6 +17,11 @@ class QuickSort
     right = array.select { |el| pivot < el }
 
     sort1(left) + middle + sort1(right)
+
+    # return array if array.length <= 1
+    # pivot = array.shift
+    # left, right = array.partition { |el| pivot <= el }
+    # sort1(left) + pivot + sort1(right)
   end
 
   # In-place.
@@ -38,6 +43,7 @@ class QuickSort
 
 
   def self.partition(array, start, length, &prc)
+    # pr organizes elements in ascending order 
     prc ||= Proc.new { |el1, el2| el1 <=> el2 }
 
     # To reduce probability of pathalogically bad data set, shuffle pivot.
@@ -45,8 +51,10 @@ class QuickSort
     # new_pivot = start + rand(length)
     new_pivot = start
 
+    # Swap element at start index with element at new_pivot index. Parallel assignment is much better for swapping elements.
     array[start], array[new_pivot] = array[new_pivot], array[start]
 
+    #This is the important part that swaps elements around a pivot_idx
     pivot_idx, pivot = start, array[start]
     ((start + 1)...(start + length)).each do |idx|
       val = array[idx]
@@ -54,8 +62,6 @@ class QuickSort
         # if the element is greater than or equal to the pivot, leave
         # where it is.
       else
-        # Three-way shuffle: pivot_idx + 1 => idx, pivot_idx =>
-        # pivot_idx + 1, idx => pivot_idx.
 
         # move self[pivot_idx + 1] to idx, which keeps this bigger item
         # to the right of the pivot.
