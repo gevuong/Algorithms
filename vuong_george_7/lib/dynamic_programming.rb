@@ -89,7 +89,16 @@ class DynamicProgramming
   end
 
   def knapsack(weights, values, capacity)
+    return 0 if capacity < weights.min
+    sum = 0
+    weights.each_with_index do |weight, idx|
+      if weight <= capacity
+        sum += values[idx]
+      end
+    end
+    sum
 
+    # knapsack_table(weight, values, capacity - 1)
   end
 
   # Helper method for bottom-up implementation
