@@ -30,9 +30,9 @@ class BinarySearchTree
     BinarySearchTree.max(tree_node)
   end
 
-  # def maximum(tree_node = @root)
-  #   BinarySearchTree.max(tree_node)
-  # end
+  def min
+    BinarySearchTree.min(@root)
+  end
 
   def depth(tree_node = @root)
     BinarySearchTree.height!(tree_node)
@@ -43,6 +43,7 @@ class BinarySearchTree
   end
 
   def in_order_traversal(tree_node = @root, arr = [])
+    BinarySearchTree.inorder!(tree_node)
   end
 
 
@@ -56,6 +57,13 @@ class BinarySearchTree
       node.right = self.insert!(node.right, value)
     end
     node
+  end
+
+  def self.inorder!(node)
+    return [] unless node
+    BinarySearchTree.inorder!(node.left) +
+    [node.value] +
+    BinarySearchTree.inorder!(node.right)
   end
 
   def self.find!(node, value)
@@ -84,23 +92,6 @@ class BinarySearchTree
     self.min(node.left)
   end
 
-  def self.delete!(node, value)
-    return nil unless node
-    if value < node.value
-      node.left = self.delete!(node.left, value)
-    elsif value > node.value
-      node.right = self.delete!(node.right, value)
-    else
-      return node.left unless node.right
-      return node.right unless node.left
-      temp = node
-      node = temp.right.min
-      node.right = BinarySearchTree.delete_min!(temp.right)
-      node.left = temp.left
-    end
-    node
-  end
-
   def self.delete_min!(node)
     return nil unless node
     return node.right unless node.left
@@ -108,4 +99,25 @@ class BinarySearchTree
     node
   end
 
+  def self.delete!(node, value)
+    return nil unless node
+    if value < node.value
+
+      node.left = self.delete!(node.left, value)
+      # return node.left.left.right.value
+    elsif value > node.value
+
+      node.right = self.delete!(node.right, value)
+    else
+      return node.left unless node.right
+      return node.right unless node.left
+      temp = node
+      # p temp.right
+      # node = temp.right
+      node.right = BinarySearchTree.delete_min!(temp.right)
+
+      node.left = temp.left
+    end
+    node
+  end
 end
