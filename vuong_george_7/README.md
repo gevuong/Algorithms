@@ -12,6 +12,13 @@ Then, get started with Dynamic Programming!
 
 
 ## Lecture
+### Top Down
 * Often referred to as 'memoization'
 * Typical of recursive implementations that depend on solutions further down the chain
-* Build your stacks and save work to a cache as you bubble up - subsequent calls to the same function within any given stack can pull the answer out of the cache without incurring more function calls. 
+* Build your stacks and save work to a cache as you bubble up - subsequent calls to the same function within any given stack can pull the answer out of the cache without incurring more function calls.
+* Don't incur extra function calls
+
+### Bottom up
+* Uses smaller solns as the basis of later/larger solutions
+* Typical of iterative implementations
+* Can use a cache as well, but builds it from the ground up without incurring extra function calls. 
