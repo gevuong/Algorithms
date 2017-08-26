@@ -72,19 +72,19 @@ class DynamicProgramming
       # return res
   end
 
-  def super_frog_hops(n, k)
-    if @super_frog_cache[k].nil?
-      @super_frog_cache[k] = { 0 => [[]], 1 => [[1]] }
+  def super_frog_hops(num_stairs, max_stairs)
+    if @super_frog_cache[max_stairs].nil?
+      @super_frog_cache[max_stairs] = { 0 => [[]], 1 => [[1]] }
     end
-      return @super_frog_cache[k][n] if @super_frog_cache[k][n]
+      return @super_frog_cache[max_stairs][num_stairs] if @super_frog_cache[max_stairs][num_stairs]
       superfrog = []
-        if n < k
-          k = n
+        if num_stairs < max_stairs
+          max_stairs = num_stairs
         end
-      (1..k).each do |idx|
-        superfrog += super_frog_hops(n - idx, k).map { |el| el + [idx] }
+      (1..max_stairs).each do |idx|
+        superfrog += super_frog_hops(num_stairs - idx, max_stairs).map { |el| el + [idx] }
       end
-      @super_frog_cache[k][n] = superfrog
+      @super_frog_cache[max_stairs][num_stairs] = superfrog
       superfrog
   end
 
