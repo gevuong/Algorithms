@@ -1,6 +1,6 @@
 var LinkedList = function() {
-  this.head = null;
-  this.tail = null;
+  this.head = null; // head pointer
+  this.tail = null; // tail pointer
 }
 
 var Node = function(value, next, prev) {
@@ -9,20 +9,21 @@ var Node = function(value, next, prev) {
   this.prev = prev;
 }
 
-// 1. reassign head pointer to newNode
-// 2. reassign newNode.prev to null
-// 3. reassign newNode.next to this.head
-LinkedList.prototype.addHead = function(value) {
+// 1. create newNode
+// 2. if LL already has nodes, set head's previous pointer to newNode
+// 3. if LL is empty, set tail pointer to newNode
+// 4. regardless if LL was empty or not, assign head pointer to newNode
+LinkedList.prototype.addToHead = function(value) {
   var newNode = new Node(value, this.head, null)
-  if (this.head) {
-    this.next = this.head;
-  } else {
-    this.head = null;
-  }
-  return newNode;
+  if (this.head) this.head.prev = newNode;
+  else this.tail = newNode; // if only node in LL.
+  this.head = newNode;
 }
 
-let ll = new LinkedList;
-ll.addHead(100);
-ll.addHead(200);
-ll.addHead(300);
+var ll = new LinkedList();
+ll.addToHead(100);
+console.log('addFirstNode', ll);
+ll.addToHead(200);
+console.log('addSecondNode', ll);
+ll.addToHead(300);
+console.log('addThirdNode', ll);
