@@ -7,7 +7,7 @@
 # Is the number passed in the arg always going to be greater than 0?
 # Can we assume the number is an integer and not a float?
 def digital_root(num)
-  return num if num < 10
+  return num if num.between?(0, 10)
   while num >= 10
     num = sum_digits(num)
   end
@@ -23,4 +23,5 @@ def sum_digits(num)
 
   sum
 end
+
 puts digital_root(12345)
