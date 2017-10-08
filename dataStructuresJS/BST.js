@@ -5,7 +5,7 @@ function BST(value) {
   this.right = null;
 }
 
-// every node or element in BST is considered a sub-tree that can contain up to two children
+// every node or element in BST is considered its own BST that can contain up to two children
 // #insert method
 BST.prototype.insert = function(value) {
   if (value <= this.value) {
@@ -30,8 +30,26 @@ bst.insert(45);
 bst.insert(35);
 bst.insert(85);
 bst.insert(105);
-bst.insert(10);
-console.log(bst); // not very helpful
 console.log(bst.right.left.left); // => 59
 console.log(bst.left.right.left); // => 35
 console.log(bst.right.right); // => 100
+
+
+// #contains method
+BST.prototype.contains = function(value) {
+  if (value === this.value) return true;
+  if (value < this.value) {
+    if (!this.left) return false;
+    else return this.left.contains(value);
+  }
+  else if (value > this.value) {
+    if (!this.right) return false;
+    else return this.right.contains(value);
+  }
+}
+
+// test above case:
+console.log(bst.contains(50));
+console.log(bst.contains(60));
+console.log(bst.contains(45));
+console.log(bst.contains(108));

@@ -21,12 +21,12 @@ function factorial(num) {
 
 - Consider two conditions:
 2. If `value` is less than or equal to the value of the root node (hint: `this.value`):
-* If `left` child does not exist, set `left` child to a new instance of BST.
-* Otherwise, if a `left` child does exist, run `insert` method on current `left` child passing in `value`.
+  * and if `left` child does not exist, set `left` child to a new instance of BST.
+  * Otherwise, if `left` child does exist, run `insert` method on current `left` child passing in `value`.
 
 3. If `value` greater than the value of the root node:
-* and the `right` child node is empty, set `right` child to the value of the new instance of BST.
-* Otherwise, if a `right` child does exist, run `insert` method on current `right` child passing in `value`.
+  * and if `right` child node is empty, set `right` child to a new instance of BST.
+  * Otherwise, if `right` child does exist, run `insert` method on current `right` child passing in `value`.
 
 - Test `insert` method before moving on.
 
@@ -38,9 +38,9 @@ function factorial(num) {
 2. If root node is equal to `value`, `return true` to stop executing rest of code.
 
 - Next conditions:
-3. If `value` is less than current node (or `this.value`), and there is no `left` child, `return false`. This means BST does not contain value. However, if there is a `left` child, run `contains` method on `left` child passing in `value`.
+3. If `value` is less than current node (or `this.value`), and there is no `left` child, `return false`. This means BST does not contain value. However, if there is a `left` child, return `contains` method on `left` child passing in `value`.
 
-4. If `value` is greater than current node, and there is no `right` child, `return false`. However, if there is a `right` child, run `contains` method on `right` child passing in `value`.
+4. If `value` is greater than current node, and there is no `right` child, `return false`. However, if there is a `right` child, return `contains` method on `right` child passing in `value`.
 
 - Test `contains` method before moving on.
 
