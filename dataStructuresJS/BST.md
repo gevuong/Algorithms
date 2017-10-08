@@ -16,7 +16,7 @@ function factorial(num) {
 1. Create a BST constructor function that takes in a `value` argument, and contains 3 properties: a `value` (which is the root node), and left and right child nodes that are initialized to `null`. All nodes are made with the BST constructor function.
 
 
-### insert method (3 steps, 2 sets of conditions)
+### insert method (recursion, 3 steps, 2 sets of conditions)
 1. Create `insert` method in the prototype of BST, taking in a `value` argument. The `value` is used to make a new BST (or node) and is then placed in original BST at correct location.
 
 - Consider two conditions:
@@ -31,7 +31,7 @@ function factorial(num) {
 - Test `insert` method before moving on.
 
 
-### contains method (return true if BST contains a given value)
+### contains method (recursion, return true if BST contains a given value)
 1. Create a `contains` method in the prototype of BST, taking in `value` as an argument.
 
 - First condition to consider:
@@ -45,34 +45,34 @@ function factorial(num) {
 - Test `contains` method before moving on.
 
 
-### depthFirstTraversal method (Requires 5 lines of code, each line being an if-statement)
+### depthFirstTraversal method (Requires recursion, 5 lines of if-statements)
 - This method starts traversing at the top of BST, and travels through a single branch all the way to its bottom, before moving on to the next branch. The iterator function will run on each of the traversed nodes.
 1. Create `depthFirstTraversal` method in the prototype of BST, taking in `iteratorFunc` and `order` as arguments.
 
 #### Couple versions/orders in DFS:
-**in-order**, most widely used version in practice, touches all nodes in BST in order from least to greatest.
+**in-order**, most widely used version in practice, touches all nodes in BST in order from least to greatest. Traverses to the lowest level along left branch, touches left child, then root node of that sub-tree, then right node of sub-tree.
 
-1. If a `left` child exists, run `depthFirstTraversal` method passing in `iteratorFunc` and `order` as arguments.
+1. If a `left` child exists, run `depthFirstTraversal` method on left child, passing in `iteratorFunc` and `order` as arguments.
 2. If `order` is `in-order`, run `iteratorFunc` passing in `value` of root node. Remember that all nodes are its own BST with a root node, and up to two children nodes.
-3. If there is a `right` child, run `depthFirstTraversal` method passing in `iteratorFunc` and `order` as arguments.
+3. If there is a `right` child, run `depthFirstTraversal` method on right child, passing in `iteratorFunc` and `order` as arguments.
 
 - To test order type in DFS,
 1. Define `iteratorFunc` taking in a `value` argument that console logs each value. This will log the order in which DFS is traversing in BST.
 
 ### Do we really need `iteratorFunc` to properly implement DFS? Or is it primarily used to console log values to see how DFS traverses?
 
-**pre-order** touches top node first, then operates as if `order` is `in-order`, touching left branch, then right branch.
+**pre-order** touches top node first, then traverses left  branch, touching every left child until it reaches the bottom, then touches the right child of each sub-tree along left branch, working its way back up to top node, then traverses the right branch of BST, and repeats traversal pattern done on left branch.
 
 - Assign new condition in first line of code:
-1. If `order` is set to `pre-order`, run `iteratorFunc` on value of current node (or `this.value`).
+1. If `order` is set to `pre-order`, run `iteratorFunc` on value of current node (or `this.value`) in first line of `depthFirstTraversal` block.
 
 **post-order** first touches lowest level of left branch, touching `left` children of each sub-tree, `right` children of each sub-tree, then parent node of each sub-tree. Then touches lowest level of right branch, touching `left` children of each sub-tree, `right` children of each sub-tree, then parent node of each sub-tree, finally reaching the top node of original BST. This type of `order` is great for safely deleting nodes from a BST because it starts from the lowest level and works its way up.
 
 - Assign new condition in last line of code:
-1. If `order` is set to `post-order`, run iteratorFunc on value of current node after the `left` and `right` children are processed.
+1. If `order` is set to `post-order`, run `iteratorFunc` on value of root node after the `left` and `right` children are processed. Add if condition to last line of `depthFirstTraversal` block.
 
 
-### breadthFirstTraversal method
+### breadthFirstTraversal method (no recursion)
 - Traverses BST level-by-level, beginning with top level. In practice, BFS is useful for defining a hierarchy or level of command, such as storing all employees of a company to determining who are in executive roles or subordinate roles.  
 
 1. Create `breadthFirstTraversal` method in prototype of BST, taking `iteratorFunc` as an argument.
