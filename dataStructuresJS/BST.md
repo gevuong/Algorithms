@@ -21,7 +21,7 @@ function factorial(num) {
 
 - Consider two conditions:
 2. If `value` is less than or equal to the value of the root node (hint: `this.value`):
-* If `left` child does not exist, set `left` child to the value of the new instance of BST.
+* If `left` child does not exist, set `left` child to a new instance of BST.
 * Otherwise, if a `left` child does exist, run `insert` method on current `left` child passing in `value`.
 
 3. If `value` greater than the value of the root node:
