@@ -76,9 +76,9 @@ function factorial(num) {
 - Traverses BST level-by-level, beginning with top level. In practice, BFS is useful for defining a hierarchy or level of command, such as storing all employees of a company to determining who are in executive roles or subordinate roles.  
 
 1. Create `breadthFirstTraversal` method in prototype of BST, taking `iteratorFunc` as an argument.
-2. Define a `queue` to be an array that stores the root node. (i.e. `var queue = [this]`) **But why [this] and not [this.value]?** A `queue` implements FIFO, like waiting in line at a grocery store.
+2. Define a `queue` to be an array that stores the root node. (i.e. `var queue = [this]`) **But why not [this.value]?** A `queue` implements FIFO, like waiting in line at a grocery store.
 3. Run a `while` loop until `queue` is an empty array.
-4. Run shift on `queue` and store value in `treeNode`.
+4. Shift out a node in `queue` and store node in `treeNode`.
 
 - Consider condition:
 5. If `treeNode` has a `left` child, push `left` child of `treeNode` into `queue`.
