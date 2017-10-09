@@ -7,6 +7,7 @@ function BST(value) {
 
 // Remember, each node or element in BST is its own BST or sub-tree containing up to two children.
 
+
 // #insert method (use recursion)
 BST.prototype.insert = function(value) {
   if (value <= this.value) {

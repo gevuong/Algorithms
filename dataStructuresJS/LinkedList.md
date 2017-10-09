@@ -33,8 +33,8 @@ tailNode = {
 2. Create a `Node` constructor function that takes three arguments, and assign the arguments to three properties (stated above) within the constructor function.
 
 
-### Create addHead method (5 steps)
-1. Create `addToHead` method to LinkedList prototype that takes a `value` argument.
+### #Create addToHead method (5 steps), O(1)
+1. Create `addToHead` method to `LinkedList` prototype that takes a `value` argument. This is how you add a new method to `LinkedList` constructor function.
 2. Create `newNode` to add to head of LL. Set `next` property to `this.head`, which will point to the old head node if there are already nodes in LL. If there are no nodes in LL, then `next` property is set to `null`. Because `newNode` is going to be the new head node, which means there are no nodes that come before it, set `prev` property to `null`.
 
 - Now, consider two conditions:
@@ -45,12 +45,12 @@ tailNode = {
 - Test function and test cases in chrome dev tools before moving on.
 
 
-### addToTail method (5 easy steps)
-Similar to writing addToHead, try writing the addToTail method.
+### #addToTail method (5 easy steps), O(1)
+- Similar to `addToHead`, try coding `addToTail` method.
 
 
-### removeHead method (6 steps, 2 sets of conditions)
-1. Create `removeHead` function in LinkedList prototype, taking no arguments.
+### #removeHead method (6 steps, 2 sets of conditions), O(1)
+1. Create `removeHead` function in `LinkedList` prototype, taking no arguments.
 
 - Consider two conditions:
 2. If LL is empty, or if there is no `this.head`, return `null` so rest of code is not executed.
@@ -58,19 +58,31 @@ Similar to writing addToHead, try writing the addToTail method.
 4. Now set `this.head` to be the old head node, using the next pointer of the current head node.
 
 - The new head node assigned to `this.head` can be a node itself, or `null` if LL started with one node. Consider two conditions:
-5. If there is a `head` present, set `prev` property to `null`. Otherwise, set `tail` property to null, meaning that LL is empty so both head and tail pointers are null.
+5. If there is a `head` present, set `prev` property to `null`. Otherwise, set `tail` property to `null`, meaning that LL is empty so both head and tail pointers are `null`.
 6. Return value of head node (in Step 3) that is being removed.
 
-### removeTail method
+### #removeTail method, O(1)
+- Similar to `removeHead`, try coding `removeTail` method.
 
 
-### search method
+### #search method (use while loop), O(n)
+1. Create `search` method as a prototype of `LinkedList`, taking in a `searchValue` argument.
+2. Set `currentNode` equal to head property.
+3. While `currentNode` exists, iterate through each node by setting `currentNode` to next node, and if `value` of `currentNode` is equal to `searchValue`, return `value` of `currentNode`.
+4. After iterating through each node in LL and exiting while loop, return `null`.
 
 
+### #indexOf method, O(n)
+1. Create `indexOf` method by adding method to LinkedList constructor function, taking in a `searchValue` argument.
+2. Set `indices` equal to empty array.
+3. Set `currentNode` equal to head property.
+4. Set `currentIndex` equal to 0 to begin iteration.
+5. While `currentNode` exists, iterate through each node by setting `currentNode` to next node, increasing `currentIndex` count by 1. If `searchValue` is equal to currentNode's `value`, push `currentIndex` to `indices` array.
+6. Return `indices` array.
 
 
 ### Time Complexity
-- `addHead`, `addTail`, `removeHead`, and `removeTail` are of **constant time, O(1)**. This is because the head and tail pointers are keeping track of the head and tail nodes in the list.  
+- `addToHead`, `addToTail`, `removeHead`, and `removeTail` are of **constant time, O(1)**. This is because the head and tail pointers are keeping track of the head and tail nodes in the list.  
 
 - `search` is of **linear time, O(n)**.
 
