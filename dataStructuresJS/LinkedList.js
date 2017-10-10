@@ -10,7 +10,6 @@ function Node(value, next, prev) {
   this.prev = prev;
 }
 
-
 // #addToHead function
 LinkedList.prototype.addToHead = function(value) {
   var headNode = new Node(value, this.head, null);
@@ -29,6 +28,7 @@ LinkedList.prototype.addToTail = function(value) {
 console.log('----- test #addToHead -----');
 var LL = new LinkedList();
 LL.addToHead(3);
+LL.addToHead(2);
 LL.addToHead(2);
 LL.addToHead(2);
 LL.addToHead(1);
@@ -101,6 +101,6 @@ LinkedList.prototype.indexOf = function(searchValue) {
 // test above code:
 console.log('----- test #indexOf -----');
 console.log(LL);
-console.log(LL.indexOf(3));
+console.log(LL.indexOf(2));
 console.log(LL.indexOf(4));
 console.log(LL.indexOf(0));
