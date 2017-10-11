@@ -1,7 +1,7 @@
 # There are many ways to implement these methods, feel free to add arguments
 # to methods as you see fit, or to create helper methods.
-require 'bst_node'
-
+require 'bst_node' # files, analogous to JS import
+require 'bye-bug' # gems, analogous to JS libraries
 class BinarySearchTree
   attr_accessor :root
 
@@ -10,7 +10,7 @@ class BinarySearchTree
   end
 
   # tree_node means any sub-tree root. Because remember, every node is its own BST with a root node, adnd up to two children.
-  
+
   # in order to run #insert method recursively, set another argument equal to @root. That way, each value of left and right children of root node can be compared to value.
   def insert(value, tree_node = @root)
     return @root = BSTNode.new(value) if tree_node.nil?
