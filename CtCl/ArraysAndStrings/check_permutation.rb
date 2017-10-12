@@ -22,11 +22,38 @@ def check_permutation(str1, str2)
   return false
 end
 
-puts check_permutation("god", "dog")
-puts check_permutation("string1 a", "string1 b")
-puts check_permutation(" str i ng1 ", " str i ng1 ")
+puts check_permutation("god", "dog") == true
+puts check_permutation("string1 a", "string1 b") == false
+puts check_permutation(" str i ng1 ", " str i ng1 ") == true
 
 
+def check_permutation(str1, str2)
+  counter_hash = Hash.new(0)
+  str1.each_char do |ch|
+    counter_hash[ch] += 1
+  end
+
+  str2.each_char do |ch|
+    counter_hash[ch] -= 1
+  end
+
+  counter_hash.each_value do |val|
+    return false if val < 0
+  end
+  return true
+end
+
+puts check_permutation("god", "dog") == true
+puts check_permutation("string1 a", "string1 b") == false
+puts check_permutation(" str i ng1 ", " str i ng1 ") == true
+
+
+# Write quicksort
+def quicksort(arr)
+  return arr if arr.length < 2
+  pivot = arr[0]
+  
+end
 
 # TIL sort method in Ruby uses quicksort, which is O(nlogn) best and average case. Sorting an already sorted array will result in worst case is O(n^2)? Space complexity is O(n)? Benchmark test doesn't prove that sorting a sorted array is slower...
 require 'benchmark'
