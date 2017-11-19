@@ -121,3 +121,5 @@ class BinarySearchTree
     node
   end
 end
+
+BinarySearchTree.new

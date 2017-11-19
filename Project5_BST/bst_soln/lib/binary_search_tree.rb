@@ -82,8 +82,6 @@ class BinarySearchTree
     arr
   end
 
-
-
   private
 
   def insert_into_tree(tree_node, value)
@@ -156,3 +154,6 @@ class BinarySearchTree
     current_parent.right = maximum_node.left
   end
 end
+
+
+p BinarySearchTree.new.in_order_traversal(tree_node = 5, arr = [2,4,6,7,8])
