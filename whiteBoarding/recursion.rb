@@ -1,7 +1,11 @@
 # BST (in-order)
 def traversal(node)
-  return [] if node.left.nil?
-  
+  arr = []
+  return arr if node.left.nil? || node.right.nil?
+  arr += traversal(node.left)
+  arr << node.val
+  arr += traversal(node.right) # similar to .concat
+  arr
 end
 
 
@@ -30,16 +34,40 @@ p range(-2, 3)
 def sum_arr(arr)
   return 0 if arr.empty?
   sum = 0
-  sum = arr[0] + sum_arr(arr.drop(1));
+  sum = arr[0] + sum_arr(arr.drop(1))
   sum
 end
 
-p sum_arr([1,2,3,8])
+p sum_arr([1, 2, 3, 8])
 
 class Array
   def deep_dup
-
+    new_array = []
+    self.each do |el|
+      new_array << (el.is_a?(Array) ? el.deep_dup : el)
+    end
+    new_array
   end
 
-  p deep_dup([1, [2], [3, [4]]])
+  def subsets
+    return [[]] if self.empty?
+    subs = self.slice(0, self.length - 1).subsets
+    print "subs: "
+    p subs
+    arr = subs.map do |sub|
+      print "sub: "
+      p sub
+      sub + [self.last]
+    end
+    print "arr: "
+    p arr
+
+    print "subs_res: "
+    p subs.concat(arr)
+  end
 end
+
+p [1,2,3].subsets
+
+# a = [1, [2], [3, [4]]]
+# p a.deep_dup
