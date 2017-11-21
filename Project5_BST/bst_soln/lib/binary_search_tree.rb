@@ -156,4 +156,5 @@ class BinarySearchTree
 end
 
 
-p BinarySearchTree.new.in_order_traversal(tree_node = 5, arr = [2,4,6,7,8])
+p bst = BinarySearchTree.new
+# in_order_traversal(tree_node = 5, arr = [2,4,6,7,8])
