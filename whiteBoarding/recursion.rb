@@ -74,21 +74,20 @@ p [1,2,3].subsets
 def permutations(arr)
   return [arr] if arr.length <= 1 # => [[1]]
 
-  # first = arr.pop
   perms = permutations(arr.slice(0, arr.length - 1))
 
   total_permutations = []
 
   perms.each do |perm|
     (0..perm.length).each do |idx|
-      total_permutations << (perm[0...idx] + [arr.last] + perm[idx..-1])
+      total_permutations << perm[0...idx] + [arr.last] + perm[idx..-1]
     end
   end
   total_permutations
-
 end
+
 print "permutations"
-p permutations([1,2,3])
+p permutations([1, 2, 3])
 
 # a = [1, [2], [3, [4]]]
 # p a.deep_dup

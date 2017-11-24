@@ -30,7 +30,7 @@ tailNode = {
 
 ### Setup constructor functions
 1. Create a `LinkedList` constructor function, initially setting `this.head` and `this.tail` properties/pointers to `null` because there are no nodes in LL yet.
-2. Create a `Node` constructor function that takes three arguments, and assign the arguments to three properties (stated above) within the constructor function.
+2. Create a `Node` constructor function that takes three arguments (val, prev, next), and assign the arguments to three properties (stated above) within the constructor function.
 
 
 ### #Create addToHead method (5 steps), O(1)
