@@ -2,11 +2,11 @@ require_relative "static_array"
 
 # capacity represents max number of cells in dynamic array We'll be using capacity instead because we want to essentially measure how much we can fill array before running into initialized length of static array.
 class DynamicArray
-  attr_reader :length
+  attr_reader :length # see :length as :count
 
   def initialize
     # begins with a capacity of 8
-    @store = Array.new(8)
+    @store = StaticArray.new(8)
     @capacity = 8
     @length = 0 # initially zero because array is initially empty
   end
