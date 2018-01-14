@@ -38,7 +38,7 @@
 # ]
 #
 # The '-' symbol denotes the key-value that is missing from the actual data structure
-# but does exist in the expected data structure.
+# but does not exist in the expected data structure.
 # The '+' symbol denotes the key-value that exists in the actual data structure
 # but does not exist in the expected data structure.
 #
@@ -53,9 +53,58 @@
 # /*** IMPLEMENT YOUR CODE HERE: ***/
 #
 def diff(actual, expected)
+  arr = []
+  actual.keys.each do |key|
+    # expected_val = {}
+    if expected[key].is_a?(Hash)
+      hash = diff(actual[key], expected[key])
+    elsif expected[key].nil?
+      arr.push(['-', key, actual[key]])
+    end
+  end
 
+  arr
 end
-# }
+
+actual = {
+   "apples" => 3,
+   "oranges" => 4
+};
+
+expected = {
+    "apples" => 3,
+    "grapes" => 5
+};
+
+p diff(actual, expected)
+
+# solution = [
+#     ['-', 'grapes', 5],
+#     ['+', 'oranges', 4]
+# ];
+
+actual = {
+    apples: 3,
+    oranges: {
+        navel: 5
+    }
+};
+
+expected = {
+    apples: 3,
+    oranges: {
+        valencia: 4
+    }
+};
+
+p diff(actual, expected)
+
+solution = [
+    ['-', 'oranges.valencia', 4],
+    ['+', 'oranges.navel', 5]
+];
+
+
 #
 # /*** END OF YOUR IMPLEMENTATION ***/
 #
@@ -106,7 +155,11 @@ end
 #     t.true(result.length === 2);
 #     t.true(arrayMembersEqual(result, solution));
 # });
-#
+
+
+
+
+
 # test('calculates the correct nested diff', t => {
 #     actual = {
 #         apples: 3,
