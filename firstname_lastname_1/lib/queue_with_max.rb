@@ -8,6 +8,7 @@
 
 require_relative 'ring_buffer'
 
+# FIFO (i.e. cafeteria)
 class QueueWithMax
   attr_accessor :store
 
@@ -19,7 +20,8 @@ class QueueWithMax
     @store.push(val)
   end
 
-  def dequeue # FIFO
+  # O(1) use ring_buffer to achieve optimal shifts
+  def dequeue
     @store.shift
   end
 

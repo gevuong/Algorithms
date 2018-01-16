@@ -1,6 +1,5 @@
 # a map can be implemented using a 2D array. Lets implement a map using only arrays. A map stores information in key-value pairs, where the keys are always unique. When implemented with arrays, a map might look something like this: my_map = [[k1, v1], [k2, v2], [k3, v2], ...]
 class Map
-
   attr_reader :map
 
   def initialize
@@ -98,5 +97,31 @@ class Queue
 
   def show
     @store.dup
+  end
+end
+
+
+class QueueWithMax
+  attr_accessor :store
+
+  def initialize
+    @store = []
+  end
+
+  def enqueue(val)
+    @store.push(val)
+  end
+
+  def dequeue # FIFO
+    @store.shift
+  end
+
+  # returns maximum element still in the queue
+  def max
+    @store.max
+  end
+
+  def length
+    @store.length
   end
 end

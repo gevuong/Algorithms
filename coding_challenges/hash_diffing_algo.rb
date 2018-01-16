@@ -52,6 +52,13 @@
 #
 # /*** IMPLEMENT YOUR CODE HERE: ***/
 #
+# this problem is similar to a deep_dup I think.
+def deep_dup(arr)
+  arr.map { |sub_arr| sub_arr.is_a?(Array) ? deep_dup(sub_arr) : sub_arr }
+  # when a sub_arr is plugged into deep_dup, if it is not an array, it return an array containing each element in sub_arr
+end
+
+
 def diff(actual, expected)
   arr = []
   actual.keys.each do |key|

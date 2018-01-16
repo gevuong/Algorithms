@@ -148,3 +148,111 @@ end
 
 p('----------permutations')
 p permutations([1, 2, 3])
+
+
+# Given two sorted arrays, find the median element amongst the two arrays. That is, if both arrays were combined, find the median element from the combined array. Assume that there is not enough memory to actually combine both arrays. There exists an O(log n + log m) solution.
+
+# Important question to distinguish between O(n) or O(log(n + m)) time.
+# Are both arrays of the same size? If so, then using divide and conquer provides an efficient solution to obtain O(log(n))
+
+# helper method
+def median(arr)
+  if arr.length % 2 == 0
+    med = ((arr[arr.length / 2] + arr[(arr.length - 1) / 2]) / 2)
+  else
+    med = arr[arr.length / 2]
+  end
+
+  med
+end
+
+def get_median(arr1, arr2)
+  # base case
+  return nil if arr1.empty? && arr2.empty?
+
+  # have to keep track of length of arrays. When length of array is 2, then we can find the median by executing the following
+  if arr1.length == 2 && arr2.length == 2
+    return ([max(arr2, arr1) + min(arr2, arr1)] / 2)
+  end
+
+  # find medium of arr1 and arr2 individually
+  med_1 = median(arr1)
+  med_2 = median(arr2)
+
+  # if med_1 < med_2, median is in range (med_1..med_2)
+  # if med_1 > med_2, median is in range (med_2..med_1)
+  if med_1 < med_2
+    get_median(arr1[med_1..-1], arr2[0..med_2])
+  elsif med_1 > med_2
+    get_median(arr1[med_2..-1], arr2[0..med_1])
+  elsif med_1 == med_2
+    return med_1
+  end
+
+end
+
+
+
+puts("--------median")
+get_median([1,2,3,5,8], [4,5,6,7])
+
+
+# Day 16
+# Write a method that takes an array and returns its duplicate values. Use less than O(n*n) time.
+
+# Whiteboarding steps
+# Step 1: create a counter hash to store number of occurrences.
+# Step 2: if hash values are greater than 2, then push key into copy_arr.
+# Step 3: return copy_arr
+
+# O(n)
+def duplicates(arr)
+  return nil if arr.empty?
+  hash = Hash.new(0)
+
+  arr.each do |el|
+    hash[el] += 1
+  end
+
+  copy_arr = []
+  hash.keys.each do |key|
+    copy_arr.push(key) if hash[key] > 1
+  end
+
+  copy_arr
+end
+puts("----------duplicates")
+p duplicates([1,2,2,3,4,4,5]) == [2, 4]
+
+
+
+# Write a method that takes a hash of symbol keys, for which the values are integers representing each key's weight. The method returns a key such that the chances of selecting a particular key are weighted by that key's value.
+
+# For the hash {:a => 1, :b => 2, :c => 3}, the chance of returning :c is 1/2, :b is 1/3, and :a is 1/6.
+
+# Whiteboarding scenario:
+# the values of keys are weights
+
+# sum of weights: need to get sum of values to find weight
+# divide the keys value by sum of weights and return result
+
+# wc: O(n)
+def choose_a_record(hash)
+  sum_of_values = hash.values.reduce(:+)
+  return nil if sum_of_values == 0
+  rand_num = rand(sum_of_values) # returns a random number from (0...sum_of_values)
+
+  sum = 0
+  hash.each do |key, val|
+    sum += val
+    # the higher the value is, the more likely value > rand_num generated. its corresponding key will return. If val > rand_num, we are in the weighted portion of the corresponding key, and key is returned.
+    # if rand_num > sum, then the next key-val pair will be assessed, val will be added to sum, and so forth.
+    # if rand_num = 0, then any val > 0 will return corresponding key.
+    if rand_num < sum
+      return key
+    end
+  end
+end
+
+p ('--------choose_a_record')
+p choose_a_record({:a => 1, :b => 2, :c => 3})
