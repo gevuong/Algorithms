@@ -19,7 +19,14 @@ class Node
 end
 
 class LinkedList
+  attr_accessor :head, :tail
+
   def initialize
+    # sentinel nodes. @head and @tail will always exist. When a node is added the list, it is added inbetween the @head and @tail. Which means @head.next and @tail.prev needs to point at recently added node.   
+    @head = nil
+    @tail = nil
+    @head.next = @tail
+    @tail.prev = @head
   end
 
   def [](i)
@@ -28,21 +35,28 @@ class LinkedList
   end
 
   def first
+    @head
   end
 
   def last
+    @tail
   end
 
   def empty?
+    return true if @head.nil? && @tail.nil?
+    false
   end
 
   def get(key)
+
   end
 
   def include?(key)
   end
 
   def append(key, val)
+    new_node = Node.new(key, val)
+
   end
 
   def update(key, val)
