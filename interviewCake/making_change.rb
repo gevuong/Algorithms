@@ -15,13 +15,7 @@
 def making_change(amount_left, denominations, current_idx = 0)
   # base cases:
   # return 1 if no amount is left. return 0 if overshoot amount (used too many coins)
-  return 1 if amount_left == 0
-  return 0 if amount_left < 0
 
-  # return 0 if current_idx == denominations.length
-  puts "checking ways to make #{amount_left} with #{denominations[current_idx..-1]}"
-
-  current_coin = denominations[current_idx]
 
   while amount_left > 0
     making_change(amount_left, denominations[current_idx..-1], current_idx + 1)
