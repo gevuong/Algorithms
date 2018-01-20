@@ -53,17 +53,9 @@ class Array
   def subsets
     return [[]] if self.empty?
     subs = self.slice(0, self.length - 1).subsets
-    print "subs: "
-    p subs
     arr = subs.map do |sub| # .map function creates an array containing subarray
-      print "sub: "
-      p sub
       sub + [self.last]
     end
-    print "arr: "
-    p arr
-
-    print "subs_res: "
     p subs.concat(arr)
   end
 end
