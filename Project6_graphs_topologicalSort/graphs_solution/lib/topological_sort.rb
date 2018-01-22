@@ -28,26 +28,30 @@ def topological_sort(vertices)
   sorted_vertices
 end
 
+arr = [[3, 1], [2, 1], [6, 5],
+    [3, 6], [3, 2], [4, 3],
+    [9, 1], [1, nil], [5, nil]]
+p topological_sort(arr)
 # Tarjans
 
-def topological_sort(vertices)
-  ordering = []
-  explored = Set.new
+# def topological_sort(vertices)
+#   ordering = []
+#   explored = Set.new
 
-  vertices.each do |vertex| # O(|v|)
-    dfs!(vertex, explored, ordering) unless explored.include?(vertex)
-  end
+#   vertices.each do |vertex| # O(|v|)
+#     dfs!(vertex, explored, ordering) unless explored.include?(vertex)
+#   end
 
-  ordering
-end
+#   ordering
+# end
 
-def dfs!(vertex, explored, ordering)
-  explored.add(vertex)
+# def dfs!(vertex, explored, ordering)
+#   explored.add(vertex)
 
-  vertex.out_edges.each do |edge| # O(|e|)
-    new_vertex = edge.to_vertex
-    dfs!(new_vertex, explored, ordering) unless explored.include?(new_vertex) 
-  end
+#   vertex.out_edges.each do |edge| # O(|e|)
+#     new_vertex = edge.to_vertex
+#     dfs!(new_vertex, explored, ordering) unless explored.include?(new_vertex) 
+#   end
 
-  ordering.unshift(vertex)
-end
+#   ordering.unshift(vertex)
+# end
