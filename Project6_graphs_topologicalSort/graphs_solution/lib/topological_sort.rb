@@ -8,7 +8,7 @@ def topological_sort(vertices)
 
   vertices.each do |v|
     in_edge_counts[v] = v.in_edges.count
-    queue << v if v.in_edges.empty?
+    queue << v if v.in_edges.empty? # shovel vertex only if vertex has no dependencies
   end
 
   sorted_vertices = []
@@ -28,10 +28,16 @@ def topological_sort(vertices)
   sorted_vertices
 end
 
-arr = [[3, 1], [2, 1], [6, 5],
-    [3, 6], [3, 2], [4, 3],
-    [9, 1], [1, nil], [5, nil]]
-p topological_sort(arr)
+# arr = [[3, 1], [2, 1], [6, 5],
+#     [3, 6], [3, 2], [4, 3],
+#     [9, 1], [1, nil], [5, nil]]
+
+
+
+# p topological_sort(arr)
+# p topological_sort(path)
+
+
 # Tarjans
 
 # def topological_sort(vertices)

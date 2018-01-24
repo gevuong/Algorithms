@@ -20,3 +20,13 @@ To make testing your solution easy, you can use this definition of `importsForFi
     }
 
     output: [contact.x, message.x, thread.x, main.x]
+
+
+
+    {
+        "main.x": ["thread.x", "message.x"],
+        "thread.x": ["message.x", "contact.x"],
+        "message.x": ["contact.x"],
+        "contact.x": [],
+    }
+    

@@ -1,19 +1,26 @@
 # You are given a file which looks like so:
 
-# lines = [
-#         "AA BB",
-#         "DD FF",
-#         "CC EE",
-#         "EE DD"
-#        ]
+lines = [
+        "AA BB",
+        "DD FF",
+        "CC EE",
+        "EE DD"
+       ]
 
+path = [
+        "main.x thread.x",
+        "main.x message.x",
+        "thread.x message.x",
+        "thread.x contact.x",
+        "message.x contact.x"
+        ]   
 # Each line of the file contains a pair of strings. Each string represents the name of a vertex. The line represents an edge connecting two vertices.
 # Your task is to find the connected components of the graph. A connected component is a subset of vertices all connected to each other. In this example, the connected components are [["AA", "BB"], ["CC", "DD", "EE", "FF"]].
 # You don't have to return the elements of the components in any particular order.
-lines = File.readlines("file.txt")
+# lines = File.readlines("file.txt")
 
 matrix = {}
-lines.each do |line|
+path.each do |line|
   v1, v2 = line.split(" ")
   matrix[v1] ||= []
   matrix[v1] << v2
