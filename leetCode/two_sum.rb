@@ -48,15 +48,11 @@ p two_sum([2, 7, 11], 13) # => [0, 2]
 # O(n) space, where is represents number of elements store in hash
 def two_sum_hash(nums, target)
   hash = {}
-  hash[nums[0]] = 0 # initialize first element
   nums.each_with_index do |el, idx|
-    next if el > target
-    next if idx == 0
     remainder = target - el
-    # implement hash lookup
-    if hash[remainder] == idx || hash[remainder].nil?
+    if hash[remainder].nil?
       # store element and idx in hash
-      hash[el] = idx  # {3: 1}
+      hash[el] = idx # {3: 0, 3: 1}
       next
     else
       return [hash[remainder], idx]
@@ -64,6 +60,7 @@ def two_sum_hash(nums, target)
   end
 end
 
-p two_sum_hash([3, 3], 6) # => [0, 1]
-p two_sum_hash([3, 2, 4], 6) # => [1, 2]
-p two_sum_hash([2, 7, 11], 13) # => [0, 2]
+# p two_sum_hash([3, 3], 6) == [0, 1] # => [0, 1]
+# p two_sum_hash([3, 2, 4], 6) == [1, 2] # => [1, 2]
+# p two_sum_hash([2, 7, 11], 13) == [0, 2] # => [0, 2]
+p two_sum_hash([-3, 4, 3, 90], 0)== [0, 2] # => [0, 2]
