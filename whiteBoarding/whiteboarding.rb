@@ -34,7 +34,7 @@ def digital_root_rec(num)
         sum += num % 10 
         num = num / 10
     end 
-    return digital_root_rec(sum) # add "return" because when you reach peak of call stack, and stack begins to unwind, immediately return calculated sum
+    return digital_root_rec(sum) # add "return" because when you reach peak of call stack, and stack begins to unwind, immediately return calculated sum. I think that's how it works.
 end 
 
 p digital_root(1234) == 1
@@ -79,7 +79,7 @@ puts "---longest_common_substring---"
 # Bonus: solve it in O(m * n) using O(m * n) extra space. (Hint: the solution involves dynamic programming which will be introduced later in the course.) 
 
 # Naive Solution
-# Time: Worst case O(n*m^2), where n is length of str1, and m^2 is to check inclusion for every combination?
+# Time: Worst case O(n*m!), where n is length of str1, and m! is to check inclusion for every combination, like subsets
 # Space: O(n), where n is length of string? 
 def longest_common_substring(str1, str2)
     return str1 if str1 == str2
@@ -193,6 +193,8 @@ puts "---sum_rec---"
 # Space: O(n), where n is length of nums array
 def sum_rec(nums)
     return 0 if nums.empty?
+
+    # at peak of stack, sum = 0, as stack unwinds, nums array will be filled with one element at a time, so += nums[-1] will add last element to sum. At each recursive call, nums array was shrinking by one element, [1, 2, 3] => [1, 2] => [1] => []. As it unwinds, each nums array is looked at, and the last element is used to add to sum.
     sum = sum_rec(nums[0...nums.length - 1])
     sum += nums[-1]
 end 
@@ -253,9 +255,11 @@ p get_max_profit([10, 7, 5, 8, 11, 9]) == 6
 p get_max_profit([3, 15, 6, 10, 7, 5, 8, 11, 9]) == 12
 
 
+
+## DAY 2
 puts "---fibonacci sequence---"
 
-# Write a function, fibs(n) which returns the first n elements from the fibonnacci sequence, given n.
+# Write a function, fibs(n) which returns the first n elements from the fibonnacci sequence, given n. Assume n > 0
 
 # Solve it both iteratively and recursively.
 # Time: O(n), where n is n elements
@@ -281,19 +285,255 @@ p fibs(3) == [0, 1, 1]
 p fibs(5) == [0, 1, 1, 2, 3]
 p fibs(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
 
-# Assume n > 0
+
+# Time: O(n), where is is n elements 
+# Space: O(n), where n is n frames on call stack
 def fibs_rec(n)
-    return 0 if n == 0
-    return 1 if n == 1
+    # remember that whatever data type your desired output is, make sure the base case returns the same data type!
+    return [] if n == 0
+    return [0] if n == 1
+    return [0, 1] if n == 2
     
-    nums = [0, 1]
-    fibs_2 = fibs_rec(n - 2) 
-    fibs_1 = fibs_rec(n - 1)
-    val = fibs_2 + fibs_1
-    nums.push(val)
-    return nums
+    # at peak of stack, fibs = [0, 1] base case, then as stack unwinds, next line runs following line fibs[-1] + fibs[-2] however many times the height of stack is
+    fibs = fibs_rec(n - 1)
+    fibs.push(fibs[-1] + fibs[-2])
 end 
 
 p fibs_rec(3) == [0, 1, 1]
 p fibs_rec(5) == [0, 1, 1, 2, 3]
 # p fibs_rec(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
+
+
+puts "---subsets---"
+
+
+## DAY 6 
+# Write a function that takes an array and returns all of its subsets. How many sets will it return?
+# 2^n exponential sets. 2^n = 8 sets
+# [1, 2, 3] = [[], [1], [1, 2], [1, 3], [2], [2, 3], [3], [1, 2, 3]]
+
+def subsets(arr)
+    output_arr = [[]]
+   
+    (0...arr.length).each do |slow_idx|
+        small_subset = [arr[slow_idx]]
+        output_arr.push(small_subset)
+
+        (slow_idx + 1...arr.length).each do |fast_idx|
+            med_subset = small_subset + [arr[fast_idx]]
+            output_arr.push(med_subset)    
+        end 
+
+        large_subset = arr[slow_idx..-1]
+        output_arr.push(large_subset) unless output_arr.include?(large_subset)
+    end 
+
+    output_arr
+end 
+
+# p subsets([1, 2, 3]) 
+# p subsets([1, 2, 3, 4]) 
+# p subsets([1, 2, 3, 4]).length  == 16
+
+# def subsets(arr)
+#     return [[]] if arr.empty?
+
+#     val = arr[-1] 
+#     subs = subsets(arr[0...arr.length - 1])
+#     new_subs = subs.map do |sub|
+#         sub + [val]
+#     # Step 1: iterate arr[0..arr.length - 1]
+#     end 
+#     subs + new_subs
+# end 
+
+def subsets(arr)
+    return [[]] if arr.empty?
+  
+    val = arr[-1]
+    subs = subsets(arr[0...arr.length - 1])
+    new_subs = subs.map { |sub| sub + [val] }
+  
+    subs + new_subs
+  end
+
+p subsets([1, 2, 3]) 
+p subsets([1, 2, 3, 4]) 
+p subsets([1, 2, 3, 4]).length == 16 
+
+0,1,0,2,1,0,1,3,2,1,2,1]
+
+puts "---permutations---"
+
+
+|
+3  +                           +---+
+   |                           |   |
+2  +           +---+           +-------+   +---+
+   |           |   | x   x   x |   |   | x |   |
+1  +   +---+   +-------+   +-----------------------+
+   |   |   | x |   |   | x |   |   |   |   |   |   |
+   +-----------------------------------------------+
+     0   1   0   2   1   0   1   3   2   1   2   1 
+     0   1   1   2   2   2   2   3   3   3   3   3
+     3   3   3   3   3   3   3   3   2   2   1   0
+     
+# O(n!)
+def permutations(arr)
+    return [[]] if arr.empty?
+  
+    perms = []
+    arr.length.times do |i|
+      # Choose an element to be first
+      el = arr[i]
+      rest = arr.take(i) + arr.drop(i + 1)
+  
+      # Find permutations of the rest, and tack the first `el` at front.
+      new_perms = permutations(rest).map { |perm| perm.unshift(el) }
+      perms.concat(new_perms)
+    end
+  
+    perms
+  end
+
+
+  puts "---merge_sort---"
+
+def merge_sort(array)
+    # already sorted
+    return array if array.count < 2
+  
+    middle = array.count / 2
+    left, right = array.take(middle), array.drop(middle)
+  
+    sorted_left, sorted_right = merge_sort(left), merge_sort(right)
+  
+    merge(sorted_left, sorted_right)
+  end
+  
+  def merge(left, right)
+    merged_array = []
+    until left.empty? || right.empty?
+      merged_array <<
+        ((left.first < right.first) ? (left.shift) : (right.shift))
+    end
+  
+    merged_array + left + right
+  end
+#   Time complexity: O(n*log(n)).
+  
+  def merge(left, right)
+    merged_array = []
+    i, j = 0, 0
+    until i == left.length || j == right.length
+      if left[i] > right[j]
+        merged_array << right[j]
+        j += 1
+      else
+        merged_array << left[i]
+          i += 1
+      end
+    end
+    merged_array + left.drop(i) + right.drop(j)
+  end
+
+
+
+  puts "---binary_search---"
+
+def binary_search(array, target)
+    return nil if array.count == 0
+  
+    midpoint = array.length / 2
+    case target <=> array[midpoint]
+    when -1
+      binary_search(array.take(midpoint), target)
+    when 0
+      midpoint
+    when 1
+      subproblem_answer =
+        binary_search(array.drop(midpoint + 1), target)
+      subproblem_answer.nil? ? nil : (midpoint + 1) + subproblem_answer
+    end
+  end
+
+
+
+  puts "---is binary_search_tree?---"
+
+# Given a binary tree, write a function to check whether it’s a binary search tree or not.
+# O(n): must check every node (stops at first detected violation). The time complexity of this solution is O(n) since we need to visit each node once.
+def is_bst?(node, min = nil, max = nil)
+    return true if node.nil?
+  
+    # does this node violate constraints?
+    if (min && (min > node.value)) || (max && (max < node.value))
+      return false
+    end
+  
+    # this node follows constraints; do its children, too?
+    is_bst?(node.left, min, node.value) && is_bst?(node.right, node.value, max)
+  end
+
+
+
+
+  puts "---count_islands---"
+
+#  Given a boolean 2D matrix, find the number of islands. A group of connected trues forms an island. For example, the below matrix contains 5 islands.
+
+# Input : mat = [[T, T, F, F, F],
+# [F, T, F, F, T],
+# [T, F, F, T, T],
+# [F, F, F, F, F],
+# [T, F, T, F, T]]
+# Output : 5
+# In order to get neighbor coordinates:
+#
+# [x - 1, y - 1], [x - 1, y], [x - 1, y + 1]
+# [x, y - 1]    ,   SELF    , [x, y + 1]
+# [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]    
+def count_islands(matrix)
+    rows = matrix.length
+    cols = matrix[0].length
+    visited = Array.new(rows) { Array.new(cols) }
+  
+    # Initialize count as 0 and traverse through all 
+    # cells of the given matrix 
+    count = 0 
+    (0...rows).each do |row|
+      (0...cols).each do |col|
+  
+        # If a cell with a true value is not visited yet,
+        # then new island is found
+        if !visited[row][col] && matrix[row][col] 
+          # Visit all cells in this island
+          # increment island count
+  
+          visit_island(row, col, visited, matrix)
+          count += 1
+        end
+      end
+    end
+  
+    count 
+  end
+  
+  def visit_island(row, col, visited, matrix)
+    neighbor_row = [-1, -1, -1, 0, 0, 1, 1, 1]
+    neighbor_col = [-1, 0, 1, -1, 1, -1, 0, 1]
+  
+    visited[row][col] = true 
+  
+    (0...8).each do |idx|
+      if is_island(row + neighbor_row[idx], col + neighbor_col[idx], visited, matrix)
+        visit_island(row + neighbor_row[idx], col + neighbor_col[idx], visited, matrix)
+      end
+    end
+  end
+  
+  def is_island(row, col, visited, matrix)
+    return (row >= 0 && row < matrix.length) && (col >= 0 && col < matrix[0].length) && (matrix[row][col] && !visited[row][col])
+  end
+#   Time complexity: O(row x col)
+
