@@ -9,7 +9,7 @@
             "type": "Ruby",
             "request": "launch",
             "cwd": "${workspaceRoot}",
-            "program": "${workspaceRoot}/algorithms.rb"
+            "program": "${workspaceRoot}/whiteBoarding/whiteboarding.rb"
         },
         {
             "name": "Listen for rdebug-ide",

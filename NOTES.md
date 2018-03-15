@@ -10,8 +10,10 @@
 
 1. Topological Sort 
   - Solution is not always unique. There can be multiple solutions to sorting a graph.
+
   1. Breadth First Search (Kahn's Algorithm)
-    - Use two data structures, visited queue, and sorted stack.
+    - Two data structures, visited queue, and sorted stack.
+    - Queue tracks visited vertices and 
     - All vertices (or nodes) are initially unvisited
     - Select any unvisited vertex and begin traversal along one of its child nodes.
     - Continue traversing, and along the way, store visited vertex in a separate data structure.
@@ -36,7 +38,7 @@
   Examples:
   1. reverse()
     - One pointer starts at the beginning, and other pointer starts at the end
-    - Pointer move towards each other until they meet.
+    - Pointers move toward each other and values are swapped until they meet.
     - Time: O(n/2)
     - Space: O(1), using in-place algorithm
 
@@ -45,6 +47,13 @@
     - One pointer (fast_runner) traverses length of array, while slow_runner only traverses when a unique element is found
     - Time: worst_case O(n)
     - Space: O(1), using in-place algorithm
+
+  3. three_sum(arr, target) 
+    - First sort array, O(nlogn) time
+    - Three pointers: One at zero index, second on first index, and third at last index of array
+    - First pointer iterates length of array, O(n). Subtract target by value at first pointer. 
+    - Sum value at second and third pointer. If value < remaining target, shift second pointer to next larger value, elsif value > remainder, shift third pointer down to smaller value and sum again. 
+    - Time: O(n^3/2)
 
   3. delete_node() 
 
