@@ -46,6 +46,8 @@ puts "---digital_root_rec---"
 p digital_root_rec(99) == 9
 p digital_root_rec(1234) == 1
 
+
+
 puts "---caesar_cipher---"
 
 # Write a function that takes a message and an increment amount and outputs the same letters shifted by that amount in the alphabet. Assume lowercase and no punctuation. Preserve spaces.
@@ -71,6 +73,8 @@ end
 p caesar_cipher("", 5) == ""
 p caesar_cipher("z", 5) == "e"
 p caesar_cipher("a b x y z", 5) == "f g c d e"
+
+
 
 puts "---longest_common_substring---"
 
@@ -128,6 +132,18 @@ p longest_common_substring("zxabcdezy", "yzabcdezx") == "abcdez"
 # https://www.youtube.com/watch?v=BysNXJHzCEs
 
 # create matrix to store the length of longest_common_substring between str1 and str2. You add 1 to array so you can refer to previous diagonal value to add 1 to. Length of a common substring is dependent on previous diagonal value, so 0 + 1 would be the first instance of a common_substring.
+
+# |"" | C | A | T  
+# --------------------
+# "" | 0 | 0 | 0 | 0
+# --------------------
+# R  | 0 | 0 | 0 | 0
+# --------------------
+# A  | 0 | 0 | 1 | 0
+# --------------------
+# T  | 0 | 0 | 0 | 2  <--- Longest substring ends here!
+
+
 # Time: O(n * m), n and m being length of str1 and str2
 # Space: O(n * m)
 def make_matrix(str1, str2)
@@ -149,16 +165,6 @@ def make_matrix(str1, str2)
 p make_matrix("abd", "abcrga")
 p make_matrix("cat", "rat")
 p make_matrix("abcde", "abcd")
-
-# |"" | C | A | T  
-# --------------------
-# "" | 0 | 0 | 0 | 0
-# --------------------
-# R  | 0 | 0 | 0 | 0
-# --------------------
-# A  | 0 | 0 | 1 | 0
-# --------------------
-# T  | 0 | 0 | 0 | 2  <--- Longest substring ends here!
 
 
 def longest_common_substring_2(str1, str2)
@@ -186,6 +192,9 @@ p longest_common_substring_2("GeeksforGeeks", "GeeksQuiz") == "Geeks"
 p longest_common_substring_2("abcdxyz", "xyzabcd") == "abcd"
 p longest_common_substring_2("zxabcdezy", "yzabcdezx") == "abcdez"
 
+
+
+
 puts "---sum_rec---"
 
 # Write a function that takes an array of integers and returns their sum. Use recursion.
@@ -202,6 +211,8 @@ end
 p sum_rec([]) == 0
 p sum_rec([1, 2]) == 3
 p sum_rec([1, 2, 3, 4]) == 10
+
+
 
 puts "---get_max_profit---"
 
@@ -286,6 +297,9 @@ p fibs(5) == [0, 1, 1, 2, 3]
 p fibs(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
 
 
+
+puts "---fibonacci sequence recursion---"
+
 # Time: O(n), where is is n elements 
 # Space: O(n), where n is n frames on call stack
 def fibs_rec(n)
@@ -301,239 +315,113 @@ end
 
 p fibs_rec(3) == [0, 1, 1]
 p fibs_rec(5) == [0, 1, 1, 2, 3]
-# p fibs_rec(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
+p fibs_rec(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
 
 
-puts "---subsets---"
 
+puts "---is_palindrome?---"
 
-## DAY 6 
-# Write a function that takes an array and returns all of its subsets. How many sets will it return?
-# 2^n exponential sets. 2^n = 8 sets
-# [1, 2, 3] = [[], [1], [1, 2], [1, 3], [2], [2, 3], [3], [1, 2, 3]]
-
-def subsets(arr)
-    output_arr = [[]]
-   
-    (0...arr.length).each do |slow_idx|
-        small_subset = [arr[slow_idx]]
-        output_arr.push(small_subset)
-
-        (slow_idx + 1...arr.length).each do |fast_idx|
-            med_subset = small_subset + [arr[fast_idx]]
-            output_arr.push(med_subset)    
-        end 
-
-        large_subset = arr[slow_idx..-1]
-        output_arr.push(large_subset) unless output_arr.include?(large_subset)
+# Write a function that takes a string and returns true if it's a palindrome, false if it's not. 
+# This solution takes less time and memory than rebuilding the string backward and comparing the two.
+# Ex: madam or racecar are palindromes
+# You're essentially implementing an in-place #reverse using two-pointer technique
+# Time: O(n/2) 
+# Space: O(1)
+def is_palindrome?(string)
+    right_idx = string.length - 1
+    (0...string.length / 2).each do |left_idx|
+        return false if string[left_idx] != string[right_idx - left_idx]
     end 
-
-    output_arr
+    true
 end 
 
-# p subsets([1, 2, 3]) 
-# p subsets([1, 2, 3, 4]) 
-# p subsets([1, 2, 3, 4]).length  == 16
-
-# def subsets(arr)
-#     return [[]] if arr.empty?
-
-#     val = arr[-1] 
-#     subs = subsets(arr[0...arr.length - 1])
-#     new_subs = subs.map do |sub|
-#         sub + [val]
-#     # Step 1: iterate arr[0..arr.length - 1]
-#     end 
-#     subs + new_subs
-# end 
-
-def subsets(arr)
-    return [[]] if arr.empty?
-  
-    val = arr[-1]
-    subs = subsets(arr[0...arr.length - 1])
-    new_subs = subs.map { |sub| sub + [val] }
-  
-    subs + new_subs
-  end
-
-p subsets([1, 2, 3]) 
-p subsets([1, 2, 3, 4]) 
-p subsets([1, 2, 3, 4]).length == 16 
-
-0,1,0,2,1,0,1,3,2,1,2,1]
-
-puts "---permutations---"
-
-
-|
-3  +                           +---+
-   |                           |   |
-2  +           +---+           +-------+   +---+
-   |           |   | x   x   x |   |   | x |   |
-1  +   +---+   +-------+   +-----------------------+
-   |   |   | x |   |   | x |   |   |   |   |   |   |
-   +-----------------------------------------------+
-     0   1   0   2   1   0   1   3   2   1   2   1 
-     0   1   1   2   2   2   2   3   3   3   3   3
-     3   3   3   3   3   3   3   3   2   2   1   0
-     
-# O(n!)
-def permutations(arr)
-    return [[]] if arr.empty?
-  
-    perms = []
-    arr.length.times do |i|
-      # Choose an element to be first
-      el = arr[i]
-      rest = arr.take(i) + arr.drop(i + 1)
-  
-      # Find permutations of the rest, and tack the first `el` at front.
-      new_perms = permutations(rest).map { |perm| perm.unshift(el) }
-      perms.concat(new_perms)
-    end
-  
-    perms
-  end
-
-
-  puts "---merge_sort---"
-
-def merge_sort(array)
-    # already sorted
-    return array if array.count < 2
-  
-    middle = array.count / 2
-    left, right = array.take(middle), array.drop(middle)
-  
-    sorted_left, sorted_right = merge_sort(left), merge_sort(right)
-  
-    merge(sorted_left, sorted_right)
-  end
-  
-  def merge(left, right)
-    merged_array = []
-    until left.empty? || right.empty?
-      merged_array <<
-        ((left.first < right.first) ? (left.shift) : (right.shift))
-    end
-  
-    merged_array + left + right
-  end
-#   Time complexity: O(n*log(n)).
-  
-  def merge(left, right)
-    merged_array = []
-    i, j = 0, 0
-    until i == left.length || j == right.length
-      if left[i] > right[j]
-        merged_array << right[j]
-        j += 1
-      else
-        merged_array << left[i]
-          i += 1
-      end
-    end
-    merged_array + left.drop(i) + right.drop(j)
-  end
+p is_palindrome?("madam") == true 
+p is_palindrome?("racecar") == true 
+p is_palindrome?("raceca") == false 
 
 
 
-  puts "---binary_search---"
+puts "---valid_ip?---"
 
-def binary_search(array, target)
-    return nil if array.count == 0
-  
-    midpoint = array.length / 2
-    case target <=> array[midpoint]
-    when -1
-      binary_search(array.take(midpoint), target)
-    when 0
-      midpoint
-    when 1
-      subproblem_answer =
-        binary_search(array.drop(midpoint + 1), target)
-      subproblem_answer.nil? ? nil : (midpoint + 1) + subproblem_answer
-    end
-  end
+# Write a method that takes a string as input. It should return true if the input is a valid IPv4 address (ie. anything between 0.0.0.0 and 255.255.255.255 is valid).
+# Time: O(n), where n is length of string 
+# Space: O(1), constant because hash always stores 10 key-val pairs
+def valid_ip?(string)
+    # make sure string contains 3 periods and is not longer than max length
+    # it should start with a series one or more digits (\d+) followed by three groups that start with . and are followed with one or more digits ((\.\d+){3}).
+
+    # return false unless str =~ /^\d+(\.\d+){3}$/ 
+    return false if string.length > 15 
+    
+    # to check if string is an integer because "abc".to_i returns 0
+    num_hash = {"0" => 0, "1" => 1, "2" => 2, "3" => 3, "4" => 4, "5" => 5, "6" => 6, "7" => 7, "8" => 8, "9" => 9}
+
+    string.split(".").each do |str|
+        return false if str.length > 3 || str.empty?
+
+        # make sure all characters in str are integers
+        str.each_char { |el| return false if num_hash[el].nil? } # constant time O(3) worst case
+
+        current_int = str.to_i
+        next if current_int >= 0 && current_int <= 255
+        false
+    end 
+    true 
+
+end 
+
+p valid_ip?("0.0.0.0") == true 
+p valid_ip?("..0.0") == false 
+p valid_ip?("255.255.255.255") == true
+p valid_ip?("255.255.255.2m5") == false
 
 
 
-  puts "---is binary_search_tree?---"
+puts "---sum_from_file---"
 
-# Given a binary tree, write a function to check whether it’s a binary search tree or not.
-# O(n): must check every node (stops at first detected violation). The time complexity of this solution is O(n) since we need to visit each node once.
-def is_bst?(node, min = nil, max = nil)
-    return true if node.nil?
-  
-    # does this node violate constraints?
-    if (min && (min > node.value)) || (max && (max < node.value))
-      return false
-    end
-  
-    # this node follows constraints; do its children, too?
-    is_bst?(node.left, min, node.value) && is_bst?(node.right, node.value, max)
-  end
+# Write a method that reads in a file of integer strings, one per line, and sums them. Skip the line if it begins with a "#".
+# Time: O(n), where n is length nums
+# Space: O(n), where n is length of nums
+def sum_from_file(filename)
+    # ::readlines creates an array of each line in file. Returns an array of integers due to #map
+    nums = File.readlines(filename)
+               .select { |line| line[0] != "#" }
+               .map(&:to_i)
+    nums.reduce(:+)
+end 
 
 
 
 
-  puts "---count_islands---"
+## DAY 16
+# You are given a file which looks like so:
 
-#  Given a boolean 2D matrix, find the number of islands. A group of connected trues forms an island. For example, the below matrix contains 5 islands.
+# AA BB
+# DD FF
+# CC EE
+# EE DD
+# Each line of the file contains a pair of strings. Each string represents is the name of a vertex. The line represents an edge connecting two vertices.
 
-# Input : mat = [[T, T, F, F, F],
-# [F, T, F, F, T],
-# [T, F, F, T, T],
-# [F, F, F, F, F],
-# [T, F, T, F, T]]
-# Output : 5
-# In order to get neighbor coordinates:
-#
-# [x - 1, y - 1], [x - 1, y], [x - 1, y + 1]
-# [x, y - 1]    ,   SELF    , [x, y + 1]
-# [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]    
-def count_islands(matrix)
-    rows = matrix.length
-    cols = matrix[0].length
-    visited = Array.new(rows) { Array.new(cols) }
-  
-    # Initialize count as 0 and traverse through all 
-    # cells of the given matrix 
-    count = 0 
-    (0...rows).each do |row|
-      (0...cols).each do |col|
-  
-        # If a cell with a true value is not visited yet,
-        # then new island is found
-        if !visited[row][col] && matrix[row][col] 
-          # Visit all cells in this island
-          # increment island count
-  
-          visit_island(row, col, visited, matrix)
-          count += 1
-        end
-      end
-    end
-  
-    count 
-  end
-  
-  def visit_island(row, col, visited, matrix)
-    neighbor_row = [-1, -1, -1, 0, 0, 1, 1, 1]
-    neighbor_col = [-1, 0, 1, -1, 1, -1, 0, 1]
-  
-    visited[row][col] = true 
-  
-    (0...8).each do |idx|
-      if is_island(row + neighbor_row[idx], col + neighbor_col[idx], visited, matrix)
-        visit_island(row + neighbor_row[idx], col + neighbor_col[idx], visited, matrix)
-      end
-    end
-  end
-  
-  def is_island(row, col, visited, matrix)
-    return (row >= 0 && row < matrix.length) && (col >= 0 && col < matrix[0].length) && (matrix[row][col] && !visited[row][col])
-  end
-#   Time complexity: O(row x col)
+# Your task is to find the connected components of the graph. A connected component is a subset of vertices all connected to each other. In this example, the connected components are [["AA", "BB"], ["CC", "DD", "EE", "FF"]].
 
+# You don't have to return the elements of the components in any particular order.
+def connected_components(file)
+    hash = Hash.new { |hash, key| hash[key] = [] }
+    lines_arr = File.readlines(file) # ::readlines returns an array of each line in file
+    lines_arr.each do |line|
+        source, destination = line.split(" ")
+        hash[source].push(destination)
+    end 
+
+    hash
+end 
+
+
+class Graph 
+    def initialize()
+
+
+    def add_edge(source, destination)
+
+    end 
+end 

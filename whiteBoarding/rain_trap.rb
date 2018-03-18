@@ -76,7 +76,7 @@ def find_max_right_walls(arr)
     # iterate using find_max_left_walls(arr)
     reversed_max_right_walls = find_max_left_walls(reversed_arr)
 
-    # reverse array to obtain max_right_walls
+    # reverse array again to obtain max_right_walls
     max_right_walls = reverse_arr(reversed_max_right_walls)
 end 
 

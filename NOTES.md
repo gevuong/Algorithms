@@ -1,5 +1,10 @@
+# Data Structures and Algorithms
 
-
+## Data Structures 
+### Graph 
+### Tree 
+### Linked List 
+### Array
 
 ## Graphs 
 - A graph is a collection of nodes with edges connecting them.
@@ -28,9 +33,12 @@
 - Each tree has a root node. 
 - Binary tree is a tree in which each node has up to two children.
 - A node is called a "leaf" node if it has no children. 
+- HTML DOM is a tree of nodes
+
 
 
 ## Techniques to Tackle Array or Linked List Problems
+https://leetcode.com/articles/two-pointer-technique/
 1. Two Pointer Technique
   - One slow-runner and one fast-runner.
   - Pointers can be set to whichever index is best to solve the problem at hand.
@@ -39,7 +47,7 @@
   1. reverse()
     - One pointer starts at the beginning, and other pointer starts at the end
     - Pointers move toward each other and values are swapped until they meet.
-    - Time: O(n/2)
+    - Time: O(n/2), only requires half of array length
     - Space: O(1), using in-place algorithm
 
   2. remove_duplicates()
@@ -58,13 +66,30 @@
   3. delete_node() 
 
 
-  4. remove_nth_node()
+  4. remove_nth_node_from_end_of_list()
     - One pointer starts at head of LL. Other pointer starts at n nodes from head of LL. Both pointers begin traversing LL until fast_runner reaches tail of LL. This means that slow_runner is at the nth node.
 
   5. 
 
 
+2. Memoization
+
+  Examples: 
+  1. Longest Common Substring or Longest Common Subsequence 
+
+
 ## Algorithms
+0. Depth First Search (DFS)
+  - Used to traverse or search a **tree** or **graph** data structure.
+  - Start at **root** (or some arbitrary root for a graph) and explore as far as possible along each branch before **backtracking**.
+
+1. Dynamic Programming
+
+
 1. In-place
-  - Prevents allocation of extra space for another array. Results in O(1) extra memory.
+  - Prevents allocation of extra space for another array. Results in **O(1)** extra memory.
+  - Array is modified.
+
+
+
 
