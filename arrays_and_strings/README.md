@@ -9,8 +9,9 @@
 
 - An ADT can be thought of as a high-level description of a structure and an API (i.e., a specific set of methods). Examples of ADTs are things like sets, maps, stacks, or queues.
 
-- For more info: http://ruby-doc.org/stdlib-2.5.0/libdoc/set/rdoc/Set.html
-- For more info: https://spin.atomicobject.com/2012/09/04/when-is-a-set-better-than-an-array-in-ruby/
+- For more info: 
+    - http://ruby-doc.org/stdlib-2.5.0/libdoc/set/rdoc/Set.html
+    - https://spin.atomicobject.com/2012/09/04/when-is-a-set-better-than-an-array-in-ruby/
 
 
 

@@ -51,24 +51,23 @@ puts "---pair_sum---"
 def pair_sum(arr, target) 
     return [] if arr.length < 2
 
-    # initialize hash
+    # initialize
     hash = {} 
     pairs = []
 
     (0...arr.length).each do |idx|
         current_val = arr[idx]
-
         desired_val = target - current_val
-        desired_idx = hash[desired_val] # returns nil if pair doesn't exist
 
-        if hash[desired_val]
+        if hash[desired_val] # returns nil if pair doesn't exist
             pair = []
             min_val = [current_val, arr[desired_idx]].min
             max_val = [current_val, arr[desired_idx]].max
             pair.concat([min_val, max_val])
             pairs.push(pair)
         end 
-        # store el and idx as key-values after hash[remainder] is checked to prevent using same idx as pair
+
+        # store el and idx after hash[desired_val] is checked 
         hash[current_val] = idx 
     end 
 
@@ -123,45 +122,6 @@ p pair_sum_2([5, 5, 5, 5], 10) == [[5, 5]]
 p pair_sum_2([-1, -2, 2, 2, -2, 0, 1, 2, -1, -4], 0) == [[-2, 2], [-1, 1]] 
 
 
-# returns indices, not values
-def pair_sum_3(arr, target) 
-    return [] if arr.length < 2
-
-    # initialize hash
-    hash = {} 
-    pairs = []
-
-    (0...arr.length).each do |idx|
-        current_val = arr[idx]
-
-        desired_val = target - current_val
-        desired_idx = hash[desired_val] # returns nil if pair doesn't exist
-
-        if hash[desired_val]
-            pair = []
-            min_idx = [idx, desired_idx].min
-            max_idx = [idx, desired_idx].max
-            pair.concat([min_idx, max_idx])
-            pairs.push(pair)
-        end 
-        # store el and idx as key-values after hash[remainder] is checked to prevent using same idx as pair
-        hash[current_val] = idx 
-    end 
-
-    pairs # O(n) time, where n is length of pairs arr
-end 
-
-p pair_sum_3([1, 2, -1], 0) #== [[-1, 1]]        
-p pair_sum_3([-1, 2, 1, 11], 0) #== [[-1, 1]]     
-p pair_sum_3([1, 2, -1, -1], 0) #== [[-1, 1]]     
-p pair_sum_3([1, 2, -1, -1, -2], 0) #== [[-1, 1], [-2, 2]] 
-p pair_sum_3([1, 2, -1, -1, -2], 1) #== [[-1, 2]] 
-p pair_sum_3([1, 2, -1, -1, -2], -1) #== [[-2, 1]] 
-p pair_sum_3([5, -5, -5, -5], 0) #== [[-5, 5]] 
-p pair_sum_3([5, 5, 5, 5], 10)  #== [[5, 5]] 
-p pair_sum_3([-1, -2, 2, 2, -2, 0, 1, 2, -1, -4], 0) #== [[-2, 2], [-1, 1]] 
-
-
 
 puts "---three_sum---"
 # Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
@@ -184,28 +144,30 @@ def three_sum(nums, target)
     
     (0...nums.length - 2).each do |idx|
         current_val = nums[idx]
-        desired_val = target - current_val
+
+        # skip value if previously processed
+        next if idx > 0 && current_val == nums[idx - 1]
         
         # reset left_idx and right_idx per iteration
+        desired_val = target - current_val
         left_idx, right_idx = idx + 1, nums.length - 1
     
         until left_idx >= right_idx
             left_val, right_val = nums[left_idx], nums[right_idx]
             total_val = left_val + right_val
 
-
             if  total_val > desired_val
-                right_idx -= 1 while right_idx > left_idx && nums[right_idx] == nums[right_idx - 1]
                 right_idx -= 1
             elsif total_val < desired_val 
-                left_idx += 1while left_idx < right_idx && nums[left_idx] == nums[left_idx + 1]
                 left_idx += 1
             elsif total_val == desired_val
                 three_sum = [left_val, right_val, current_val].sort
                 threes.push(three_sum)
+
                 # these loops will skip same element and fasten algorithm
                 left_idx += 1 while left_idx < right_idx && nums[left_idx] == nums[left_idx + 1]
                 right_idx -= 1 while left_idx < right_idx && nums[right_idx] == nums[right_idx - 1]
+                
                 right_idx -= 1
                 left_idx += 1
             end 
@@ -215,26 +177,7 @@ def three_sum(nums, target)
 
 end 
 
-p three_sum([-3, -1, -1, -1, -1, 0, 1, 1, 2, 3], 0) # [-3,0,3],[-3,1,2],[-1,-1,2],[-1,0,1]]
-p three_sum([-5, -4, -4, -4, -3, -1, -1, -1, -1, 0, 1, 1, 2, 3], 0) # == [[-1, 0, 1], [-1, -1, 2]]
-# == [[-5,2,3],[-4,1,3],[-3,0,3],[-3,1,2],[-1,-1,2],[-1,0,1]]
-p three_sum([-1, 0, 1, 2, -1, -4], 0) # == [[-1, 0, 1], [-1, -1, 2]]
+p three_sum([-6, -6, -6, -3, -1, -1, -1, 0, 1, 1, 2, 3], 0) == [[-3,0,3],[-3,1,2],[-1,-1,2],[-1,0,1]]
+p three_sum([-5, -4, -4, -4, -3, -1, -1, -1, -1, 0, 1, 1, 2, 3], 0) == [[-5,2,3],[-4,1,3],[-3,0,3],[-3,1,2],[-1,-1,2],[-1,0,1]]
+p three_sum([-1, 0, 1, 2, -1, -4], 0) == [[-1, -1, 2], [-1, 0, 1]]
 p three_sum([-1, 0, 1], 0) == [[-1, 0, 1]]
-# [-4, -1, -1, 0, 1, 2]
-
-
-# puts '---three_sum_2---'
-# def three_sum_2(nums, target)
-
-#     pairs = Set.new
-#     (0...nums.length).each do |idx|
-#         desired_val = target - nums[idx]
-
-#         arr = nums[0...idx] + nums[idx + 1..-1]
-#         pairs.add(pair_sum_3(arr, desired_val))
-#     end 
-#     pairs
-# end 
-
-# p three_sum_2([-1, 0, 1, 2, -1, -4], 0)
-# p three_sum_2([-1, 0, 1], 0)
