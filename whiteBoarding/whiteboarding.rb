@@ -275,7 +275,7 @@ puts "---fibonacci sequence---"
 # Solve it both iteratively and recursively.
 # Time: O(n), where n is n elements
 # Space: O(n), where n is n elements in nums array
-def fibs(n)
+def fib_sequence(n)
     return [0] if n == 1
     return [0, 1] if n == 2
 
@@ -292,9 +292,9 @@ def fibs(n)
     nums
 end 
 
-p fibs(3) == [0, 1, 1]
-p fibs(5) == [0, 1, 1, 2, 3]
-p fibs(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
+p fib_sequence(3) == [0, 1, 1]
+p fib_sequence(5) == [0, 1, 1, 2, 3]
+p fib_sequence(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
 
 
 
@@ -302,20 +302,93 @@ puts "---fibonacci sequence recursion---"
 
 # Time: O(n), where is is n elements 
 # Space: O(n), where n is n frames on call stack
-def fibs_rec(n)
+def fib_sequence_rec(n)
     # remember that whatever data type your desired output is, make sure the base case returns the same data type!
     return [] if n == 0
     return [0] if n == 1
     return [0, 1] if n == 2
     
     # at peak of stack, fibs = [0, 1] base case, then as stack unwinds, next line runs following line fibs[-1] + fibs[-2] however many times the height of stack is
-    fibs = fibs_rec(n - 1)
+    fibs = fib_sequence_rec(n - 1)
     fibs.push(fibs[-1] + fibs[-2])
 end 
 
-p fibs_rec(3) == [0, 1, 1]
-p fibs_rec(5) == [0, 1, 1, 2, 3]
-p fibs_rec(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
+p fib_sequence_rec(3) == [0, 1, 1]
+p fib_sequence_rec(5) == [0, 1, 1, 2, 3]
+p fib_sequence_rec(9) == [0, 1, 1, 2, 3, 5, 8, 13, 21]
+# p fibs_rec(100) # == [0, 1, 1, 2, 3, 5, 8, 13, 21]
+
+
+
+puts "---fibonacci---"
+
+# Given a number n, print n-th Fibonacci Number. 
+# Examples:
+# If n = 0, then fib() should return 0. 
+# If n = 1, then it should return 1.
+# 0 + 1 = 1, 2nd fib number
+# 2 + 1 = 3, 3rd fib number
+def fibonacci(n)
+    return 1 if n == 1 || n == 2
+    return fibonacci(n - 1) + fibonacci(n - 2)
+end
+
+p fibonacci(1) == 1 # [0, 1]
+p fibonacci(2) == 1 # [0, 1]
+p fibonacci(3) == 2 # [0, 1, 1]
+p fibonacci(5) == 5 # [0, 1, 1, 2, 3]
+p fibonacci(9) == 34 #[0, 1, 1, 2, 3, 5, 8, 13, 21]
+# p fibonacci_sum(100) 
+
+
+puts "---fibonacci memoization---"
+
+def fibonacci_2(n)
+    # initialize cache
+    cache = { 1 => 1, 2 => 1 }
+
+    return cache[n] unless cache[n].nil?
+    res = fibonacci_2(n - 1) + fibonacci_2(n - 2)
+    cache[n] = res 
+    return res
+end 
+
+p fibonacci_2(1) == 1 # [0, 1]
+p fibonacci_2(2) == 1 # [0, 1]
+p fibonacci_2(3) == 2 # [0, 1, 1]
+p fibonacci_2(5) == 5 # [0, 1, 1, 2, 3]
+p fibonacci_2(9) == 34 #[0, 1, 1, 2, 3, 5, 8, 13, 21]
+# p fibonacci_2(100) # does not work
+
+
+puts "---Fibonacci class memoization---"
+
+# class Fibonacci
+#     def initialize
+#     # use a data structure that gives us constant lookup time. Both a hash and an array will do. Although we could use an array in this case, a hash is better since it does not confine us to integer keys.
+#         @cache = { 1 => 1, 2 => 1 }
+#     end
+    $cache = { 1 => 1, 2 => 1 }
+    def fibonacci_3(n)
+        # return 1 if n == 1 || n == 2
+        # Check our cache instead of the original base case
+        return $cache[n] unless $cache[n].nil?
+    
+        # Record our answer in our cache before returning it
+        ans = fibonacci_3(n - 1) + fibonacci_3(n - 2)
+        $cache[n] = ans
+        return ans
+    end
+#   end
+
+# a = Fibonacci.new
+p fibonacci_3(100)
+# p fibonacci_2(1) == 1 # [0, 1]
+# p fibonacci_2(2) == 1 # [0, 1]
+# p fibonacci_2(3) == 2 # [0, 1, 1]
+# p fibonacci_2(5) == 5 # [0, 1, 1, 2, 3]
+# p fibonacci_2(9) == 34 #[0, 1, 1, 2, 3, 5, 8, 13, 21]
+# p fibonacci_2(100)
 
 
 
@@ -390,38 +463,3 @@ def sum_from_file(filename)
     nums.reduce(:+)
 end 
 
-
-
-
-## DAY 16
-# You are given a file which looks like so:
-
-# AA BB
-# DD FF
-# CC EE
-# EE DD
-# Each line of the file contains a pair of strings. Each string represents is the name of a vertex. The line represents an edge connecting two vertices.
-
-# Your task is to find the connected components of the graph. A connected component is a subset of vertices all connected to each other. In this example, the connected components are [["AA", "BB"], ["CC", "DD", "EE", "FF"]].
-
-# You don't have to return the elements of the components in any particular order.
-def connected_components(file)
-    hash = Hash.new { |hash, key| hash[key] = [] }
-    lines_arr = File.readlines(file) # ::readlines returns an array of each line in file
-    lines_arr.each do |line|
-        source, destination = line.split(" ")
-        hash[source].push(destination)
-    end 
-
-    hash
-end 
-
-
-class Graph 
-    def initialize()
-
-
-    def add_edge(source, destination)
-
-    end 
-end 

@@ -33,7 +33,7 @@ def get_products_of_all_ints_except_at_index(arr)
   return arr if arr.length < 2
 
   products_of_ints = Array.new(4) { 1 }
-  products_of_ints[0] = 1 #initialize first index of array
+  products_of_ints[0] = 1 # initialize first index of array
   products_prior = 1
   products_after = 1
 
