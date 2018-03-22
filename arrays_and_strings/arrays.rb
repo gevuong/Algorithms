@@ -61,8 +61,8 @@ def pair_sum(arr, target)
 
         if hash[desired_val] # returns nil if pair doesn't exist
             pair = []
-            min_val = [current_val, arr[desired_idx]].min
-            max_val = [current_val, arr[desired_idx]].max
+            min_val = [current_val, desired_val].min
+            max_val = [current_val, desired_val].max
             pair.concat([min_val, max_val])
             pairs.push(pair)
         end 
@@ -181,3 +181,151 @@ p three_sum([-6, -6, -6, -3, -1, -1, -1, 0, 1, 1, 2, 3], 0) == [[-3,0,3],[-3,1,2
 p three_sum([-5, -4, -4, -4, -3, -1, -1, -1, -1, 0, 1, 1, 2, 3], 0) == [[-5,2,3],[-4,1,3],[-3,0,3],[-3,1,2],[-1,-1,2],[-1,0,1]]
 p three_sum([-1, 0, 1, 2, -1, -4], 0) == [[-1, -1, 2], [-1, 0, 1]]
 p three_sum([-1, 0, 1], 0) == [[-1, 0, 1]]
+
+
+
+puts '---four_sum?---'
+# Given an array of unique integers and a target sum, determine whether any four integers in the array sum to that amount.
+def four_sum?(nums, target)
+    return false if nums.length < 4
+
+    # initialize
+    hash = {}
+    # contains sum of first element
+    one_hash = {}
+
+    # contains sum of first two elements 
+    two_hash = {}
+
+    # contains sum of three elements
+    three_hash = {} 
+
+    nums.each do |el|
+
+        return true if three_hash[target - el]
+        
+        two_hash.each_key do |key|
+            three_hash[key + el] = true
+        end 
+
+        one_hash.each_key do |key|
+            two_hash[key + el] = true 
+        end 
+        
+        hash.each_key do |key|
+            one_hash[key + el] = true
+        end 
+
+        hash[el] = true
+    end
+
+    false
+end 
+
+
+def four_sum?(array, target)
+
+    # the first hash contains each of the elements that we have checked thus far
+    hash = Hash.new
+  
+    # two_sum_hash contains sums of two elements from our array
+    two_sum_hash = Hash.new
+  
+    # three_sum_hash contains sums of three elements from our array
+    three_sum_hash = Hash.new
+  
+    array.each do |num|
+  
+      # Return true if there is a sum of three numbers equal to the difference of 
+      # the target and the current num (i.e., if the current num and one of the
+      # three_sums sum to the target)
+      return true if three_sum_hash[target - num]
+  
+      # if we have any nums in our two_sum hash, add the current num to each to 
+      # populate a hash of three_sums
+      two_sum_hash.each_key do |key|
+        three_sum_hash[key + num] = true
+      end
+  
+      # if we have any nums in our single num hash, sum the current num 
+      # with each of these numbers and store them in a hash of possible two sums
+      hash.each_key do |key|
+        two_sum_hash[key + num] = true
+      end
+  
+      # lastly, add the num to a hash of all nums
+      hash[num] = true
+    end
+  
+    false
+  
+  end
+
+arr = [0, 1, 5, 7]
+p four_sum?([0, 0, 0, 1], 0) == false # => should be false
+p four_sum?([1, 8, -1, 9, -2, 2], 0) == true # => should be false
+p four_sum?([1, 0, -1, 0, -2, 2], 0) == true # => should be false
+p four_sum?(arr, 10) == false # => should be false
+p four_sum?([0, 1, 5, 7], 6) == false # => should be true
+p four_sum?([0, 1, 5, 7, 0], 6) == true # => should be true
+p four_sum?(arr, 13) == true # => should be true
+p four_sum?([7, 0, -9, 8, -2, 8], 23) == true
+p four_sum?([0, 15, 1, 19, 5, 21, 7], 13) == true # => should be false
+p four_sum?([0, -15, 1, -19, 5, -21, 7], 13) == true # => should be false
+
+
+puts '---three_sum?---'
+# Given an array of unique integers and a target sum, determine whether any four integers in the array sum to that amount.
+def three_sum?(nums, target)
+    return false if nums.length < 3
+
+    # initialize
+    one_hash = {}
+    two_hash = {}
+
+    nums.each do |el|
+        
+        one_hash.each_key do |key|
+            return true if two_hash[el]
+            two_hash[key - el] = true
+        end 
+
+        remaining = target - el
+        one_hash[remaining] = true
+
+    end
+    false
+
+end 
+
+p three_sum?([7, -9, 8, -2, 8], 23) == true
+p three_sum?([0, 1, 5, 7], 6) == true # => should be true
+p three_sum?([0, 15, 13, 2, 21, 7], 13) == false # => should be false
+p three_sum?([0, 15, 13, 0, 21, 7], 13) == true # => should be false
+p three_sum?([0, 15, 19, 6, 21, 7], 13) == true # => should be false
+p three_sum?([0, 15, 1, 19, 5, 21, 7], 13) == true # => should be false
+p three_sum?([0, -15, 1, -19, 5, -21, 7], 13) == true # => should be false
+
+
+
+puts '---two_sum?---'
+# Given an array of unique integers and a target sum, determine whether any four integers in the array sum to that amount.
+def two_sum?(nums, target)
+    return false if nums.length < 2
+
+    # initialize
+    one_hash = {}
+
+    nums.each do |el|
+        remaining = target - el
+        return true if one_hash[remaining]
+        one_hash[el] = true
+    end 
+    
+    false
+end 
+
+p two_sum?([0, 1, 5, 7], 6) == true# => should be true
+p two_sum?([0, 1, 5, 7], 10) == false # => should be false
+p two_sum?([0, 1, 1, 5, 5, 6, 5, 7, 8], 15) == true # => should be true
+p two_sum?([0, 1, 1, -5, -5, -6, -5, -7, -8], -15) == true # => should be true
