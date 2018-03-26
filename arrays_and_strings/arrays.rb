@@ -329,3 +329,29 @@ p two_sum?([0, 1, 5, 7], 6) == true# => should be true
 p two_sum?([0, 1, 5, 7], 10) == false # => should be false
 p two_sum?([0, 1, 1, 5, 5, 6, 5, 7, 8], 15) == true # => should be true
 p two_sum?([0, 1, 1, -5, -5, -6, -5, -7, -8], -15) == true # => should be true
+
+
+
+def climb_stairs(n)
+    return n if n <= 3
+    
+    return climb_stairs(n - 1) + climb_stairs(n - 2)
+end
+
+# p climb_stairs(44)
+
+
+$cache = {}
+def climb_stairs(n)
+  $cache = { 1 => 1, 2 => 2, 3 => 3 }
+  
+  return $cache[n] if $cache[n]
+  res = climb_stairs(n - 1) + climb_stairs(n - 2)
+  $cache[n] = res 
+  return res
+end
+
+p climb_stairs(2)
+p climb_stairs(3)
+p climb_stairs(4)
+p climb_stairs(5)
