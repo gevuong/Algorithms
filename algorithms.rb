@@ -1,12 +1,4 @@
 # Two-Pointer Approach
-
-
-def reverse(str)
-
-end
-
-
-# Two-Pointer Approach
 # Time: O(n), where n is the length of arr
 # Space: O(1)
 
