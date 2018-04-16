@@ -109,5 +109,28 @@ p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
 p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
 
 def merge_sort(arr)
+    return arr if arr.length < 2
 
+    mid_idx = arr.length / 2
+
+    left_arr = merge_sort(arr[0..mid_idx])
+    right_arr = merge_sort(arr[mid + 1..-1])
+
+    merge(left, right)
 end
+
+def merge(left, right)
+    sorted_arr = []
+    until left.empty? || right.empty?
+        left_val, right_val = left.shift, right.shift
+        if left_val < right_val
+            sorted_arr.push(left_val)
+        else left_val >= right_val
+            sorted_arr.push(right_val)
+        end
+    end
+
+    sorted_arr
+end
+
+p merge_sort([3, 6, 2, 1, 0, 3, 2])
