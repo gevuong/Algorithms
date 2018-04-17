@@ -81,6 +81,23 @@ end
 print "permutations"
 p permutations([1, 2, 3])
 
+
+$cache = {}
+def climb_stairs(n)
+  $cache = { 1 => 1, 2 => 2, 3 => 3 }
+
+  return $cache[n] if $cache[n]
+  res = climb_stairs(n - 1) + climb_stairs(n - 2)
+  $cache[n] = res
+  return res
+end
+
+p climb_stairs(2)
+p climb_stairs(3)
+p climb_stairs(4)
+p climb_stairs(5)
+
+
 # a = [1, [2], [3, [4]]]
 # p a.deep_dup
 

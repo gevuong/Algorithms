@@ -6,7 +6,8 @@ end
 p is_unique("string") == true
 p is_unique("strings") == false
 
-# O(n) using another data structure
+# O(n) time
+# O(n) space, using hash
 def is_unique2(string)
   hash = Hash.new(0)
   string.each_char do |ch|
@@ -22,7 +23,8 @@ end
 p is_unique2("string") == true
 p is_unique2("strings") == false
 
-# O(n)
+# O(n^2) time
+# O(1) space, doesn't require storing data in new data structure
 def is_unique3(string)
   length = string.length
   string.each_char.with_index do |ch, idx|
