@@ -23,9 +23,9 @@ def longest_common_prefix(arr)
         ch = min_string[idx]
         if arr.all? { |string| string[idx] == ch }
             lcp.concat(ch)
+        else
+            return lcp
         end
-
-        return lcp if lcp.empty?
     end
 
     lcp
@@ -34,18 +34,19 @@ end
 
 p longest_common_prefix(["geeksforgeeks", "geeks", "geek", "geezer"]) == "gee"
 p longest_common_prefix(["apple", "ape", "april"]) == "ap"
+p longest_common_prefix(["abcde", "abcfe", "abcge"]) == "abc"
 p longest_common_prefix(["aca","cba"]) == ""
 
 
-def longest_common_prefix2(arr)
-
-    mid = arr.length / 2
-    left = longest_common_prefix2(arr[0..mid])
-    right = longest_common_prefix2(arr[mid + 1..-1])
-
-
-end
-
-def compare_strings(str1, str2)
-    
-end
+# def longest_common_prefix2(arr)
+#
+#     mid = arr.length / 2
+#     left = longest_common_prefix2(arr[0..mid])
+#     right = longest_common_prefix2(arr[mid + 1..-1])
+#
+#
+# end
+#
+# def compare_strings(str1, str2)
+#
+# end
